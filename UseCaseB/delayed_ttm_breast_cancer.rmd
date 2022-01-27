@@ -34,7 +34,7 @@ library(DBI)
 # glimpse(df)
 
 #con <- dbConnect(RSQLite::SQLite(), "/home/phiri/analysis-scripts/inputs/database/database.db")
-con <- dbConnect(RSQLite::SQLite(), "c:/temp/phiri_app_pre-alpha/Rmd/mydatabase_syntheticdata.sqlite")
+con <- dbConnect(RSQLite::SQLite(), "../UseCaseB/mydatabase_syntheticdata.sqlite")
 df <- dbReadTable(con, "delayed_ttm_breast_cancer")
 
 ```
