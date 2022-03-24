@@ -9,6 +9,4 @@ install.packages('plotly')
 install.packages('readr')
 install.packages('dplyr')
 install.packages('lubridate')
-install.packages("rmarkdown")
-packageurl <- "https://cran.r-project.org/src/contrib/rmarkdown_2.13.tar.gz"
-install.packages(packageurl, repos=NULL, type="source")
+install.packages("markdown")
