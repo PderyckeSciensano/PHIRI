@@ -10,5 +10,5 @@ install.packages('readr')
 install.packages('dplyr')
 install.packages('lubridate')
 install.packages("rmarkdown")
-require(devtools)
-install_version("rmarkdown", version = "2.13", repos = "https://cran.r-project.org")
+packageurl <- "https://cran.r-project.org/src/contrib/rmarkdown_2.13.tar.gz"
+install.packages(packageurl, repos=NULL, type="source")
