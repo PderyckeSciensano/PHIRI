@@ -1,7 +1,5 @@
 install.packages('RSQLite')
-install.packages('tidyverse')
 install.packages('DBI')
-install.packages('rmarkdown')
 install.packages('ggplot2')
 install.packages('DT')
 install.packages('janitor')
