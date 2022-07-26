@@ -1,0 +1,1501 @@
+
+---
+title: "FAIR evaluation"
+author: Document produced by HealthyCloud
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    df_print: paged
+    number_section: yes
+    theme: default
+    toc: no
+    toc_depth: 2
+    toc_float:
+      collapsed: no
+      smooth_scroll: yes
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(
+  eval = TRUE,
+	echo = TRUE,
+	fig.align = "center",
+	message = FALSE,
+	warning = FALSE,
+	fig.width=5.5,
+	out.width = "100%"
+)
+# clean environment
+rm(list=ls())
+gc()
+```
+
+```{r, include=FALSE}
+
+data_collection <- 'Give title to your data collection FAIR assessment'
+
+findable_q1_title <- ''
+findable_q2_title <- ''
+findable_q3_title <- ''
+findable_q4_title <- ''
+
+q1_0 <- 'selected'
+q1_a <- ''
+q1_b <- ''
+q1_c <- ''
+q1_d <- ''
+
+q2_0 <- 'selected'
+q2_a <- ''
+q2_b <- ''
+
+q3_0 <- 'selected'
+q3_a <- ''
+q3_b <- ''
+q3_c <- ''
+q3_d <- ''
+
+q4_0 <- 'selected'
+q4_a <- ''
+q4_b <- ''
+q4_c <- ''
+q4_d <- ''
+
+
+```
+
+
+
+
+
+```{r, include=FALSE}
+
+if (file.exists("./FAIRevaluation.csv")) {
+
+my_csv2 <- read.csv2(file = "./FAIRevaluation.csv", header=FALSE)
+
+data_collection <- my_csv2[1]
+
+findable_q1_title <- 'Do you have a unique identifier for your datasets?'
+findable_q2_title <- 'Do you have a unique identifier for the metadata?'
+findable_q3_title <- 'Do you produce or collect metadata for all your data (e.g. handbook, guide for users, description, keywords, timestamp, spatial coverage etc.)? Please specify'
+findable_q4_title <- 'Do you have a public metadata catalogue service?'
+
+
+if (my_csv2[21] == 'q1a') {q1_a <- 'selected'}
+if (my_csv2[21] == 'q1b') {q1_b <- 'selected'}
+if (my_csv2[21] == 'q1c') {q1_c <- 'selected'}
+if (my_csv2[21] == 'q1d') {q1_d <- 'selected'}
+
+
+if (my_csv2[22] == 'q2a') {q2_a <- 'selected'}
+if (my_csv2[22] == 'q2b') {q2_b <- 'selected'}
+
+
+if (my_csv2[23] == 'q3a') {q3_a <- 'selected'}
+if (my_csv2[23] == 'q3b') {q3_b <- 'selected'}
+if (my_csv2[23] == 'q3c') {q3_c <- 'selected'}
+if (my_csv2[23] == 'q3d') {q3_d <- 'selected'}
+
+
+if (my_csv2[24] == 'q4a') {q4_a <- 'selected'}
+if (my_csv2[24] == 'q4b') {q4_b <- 'selected'}
+if (my_csv2[24] == 'q4c') {q4_c <- 'selected'}
+if (my_csv2[24] == 'q4d') {q4_d <- 'selected'}
+
+}
+
+```
+
+
+
+# Data collection
+
+
+
+
+
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins)
+<script src=https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js></script>
+ -->
+
+<!-- Bootstrap via CDN -->
+<link rel=stylesheet href=https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css>
+
+<!-- Optional theme -->
+<link rel=stylesheet href=https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css/>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src=https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js></script>
+
+
+<style>
+canvas {
+-moz-user-select: none;
+-webkit-user-select: none;
+-ms-user-select: none;
+}
+
+.w3-container:after,.w3-container:before,.w3-panel:after,.w3-panel:before,.w3-row:after,.w3-row:before,.w3-row-padding:after,.w3-row-padding:before,
+.w3-cell-row:before,.w3-cell-row:after,.w3-clear:after,.w3-clear:before,.w3-bar:before,.w3-bar:after{content:'';display:table;clear:both}
+.w3-padding{padding:8px 0px!important}
+.w3-green,.w3-hover-green:hover{color:#fff!important;background-color:#4CAF50!important}
+.w3-border{border:1px solid #ccc!important}
+
+.glyphicon-info-sign {font-size: 1.3em; color: #328cc7;}
+
+a:link {color: #007B9A;}
+
+a:visited {color: #007B9A;}
+a {color: #007B9A;}
+
+</style>
+
+<script>
+
+$('document').ready(initialise);
+function initialise() {
+$(document).on('change', 'select', function() {
+update();
+// if you want to do stuff based on the OPTION element:
+//var opt = $(this).find('option:selected')[0];
+});
+update();
+}
+
+
+function update() {
+
+
+var fscore = parseInt($('#q1').val()) + parseInt($("#q2").val()) + parseInt($('#q3').val()) + parseInt($('#q4').val());
+$("#fbar").attr('style', "width: " +  (fscore / 17.0) * 100 + "%");
+$("#fscore").html(parseInt((fscore / 17.0) * 100) + "%");
+$("#fstars").html(createStars(fscore/17.0 * 5));
+
+var ascore = parseInt($("#q5").val()) + parseInt($("#q6").val()) + parseInt($("#q7").val()) + parseInt($("#q14").val());
+$("#abar").attr('style', "width: " +  (ascore / 10.0) * 100 + "%");
+$("#ascore").html(parseInt((ascore / 10.0) * 100) + "%");
+$("#astars").html(createStars(ascore/10.0 * 5));
+
+var iscore = parseInt($("#q8").val()) + parseInt($("#q9").val()) + parseInt($("#q10").val());
+$("#ibar").attr('style', "width: " +  (iscore / 8.0) * 100 + "%");
+$("#iscore").html(parseInt((iscore / 8.0) * 100) + "%");
+$("#istars").html(createStars(iscore/8.0 * 5));
+
+var rscore = parseInt($("#q11").val()) + parseInt($("#q12").val()) + parseInt($("#q13").val());
+$("#rbar").attr('style', "width: " +  (rscore / 7.0) * 100 + "%");
+$("#rscore").html(parseInt((rscore / 7.0) * 100) + "%");
+$("#rstars").html(createStars(rscore/7.0 * 5));
+
+var tscore = fscore / 17 + ascore / 10.0 + iscore / 8.0 + rscore / 7.0;
+$("#tbar").attr('style', "width: " +  tscore * 25.0 + "%");
+$("#tscore").html(tscore);
+
+
+$("#tpercentage").html(parseInt(tscore * 25.0) + "%");
+console.log(tscore)
+$("#tstars").html(createStars(tscore/4.0 * 5));
+
+$("#q1_answer").html('<i>' + $("#q1 option:selected").text() + '</i>');
+$("#q1_score").html($("#q1").val());
+
+$("#q2_answer").html('<i>' + $("#q2 option:selected").text() + '</i>');
+$("#q2_score").html($("#q2").val());
+
+$("#q3_answer").html('<i>' + $("#q3 option:selected").text() + '</i>');
+$("#q3_score").html($("#q3").val());
+
+$("#q4_answer").html('<i>' + $("#q4 option:selected").text() + '</i>');
+$("#q4_score").html($("#q4").val());
+
+$("#f_total").html(fscore);
+
+$("#q5_answer").html('<i>' + $("#q5 option:selected").text() + '</i>');
+$("#q5_score").html($("#q5").val());
+
+$("#q6_answer").html('<i>' + $("#q6 option:selected").text() + '</i>');
+$("#q6_score").html($("#q6").val());
+
+$("#q7_answer").html('<i>' + $("#q7 option:selected").text() + '</i>');
+$("#7_score").html($("#q7").val());
+
+$("#q14_answer").html('<i>' + $("#q14 option:selected").text() + '</i>');
+$("#14_score").html($("#q14").val());
+
+$("#a_total").html(ascore);
+
+$("#q8_answer").html('<i>' + $("#q8 option:selected").text() + '</i>');
+$("#q8_score").html($("#q8").val());
+$("#q9_answer").html('<i>' + $("#q9 option:selected").text() + '</i>');
+$("#q9_score").html($("#q9").val());
+$("#q10_answer").html('<i>' + $("#q10 option:selected").text() + '</i>');
+$("#q10_score").html($("#q10").val());
+$("#i_total").html(iscore);
+
+$("#q11_answer").html('<i>' + $("#q11 option:selected").text() + '</i>');
+$("#q11_score").html($("#q11").val());
+$("#q12_answer").html('<i>' + $("#q12 option:selected").text() + '</i>');
+$("#q12_score").html($("#q12").val());
+$("#q13_answer").html('<i>' + $("#q13 option:selected").text() + '</i>');
+$("#q13_score").html($("#q13").val());
+$("#r_total").html(rscore);
+
+
+}
+
+function createStars(score) {
+var blank = '<span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>';
+var filled = '<span class="glyphicon glyphicon-star" aria-hidden="true"></span>';
+var html = "";
+var i = 0;
+score = Math.floor(score);
+
+while (i < 5) {
+if (score > i) {
+html += filled;
+} else {
+html += blank;
+}
+i += 1;
+}
+return html;
+}
+
+</script>
+
+
+
+<div class="container">
+
+
+
+
+<div class="bs-example">
+<div class="panel-group" id="accordion">
+<form>
+<input class="form-control" id="q0"  type="text"  name="q0" value="`r toString(data_collection)`" >
+</form>
+<BR>
+
+
+This FAIR tool...
+
+
+<!-- Findable -->
+<div class="panel panel-default">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a data-toggle="collapse" href="#collapseOne">Findable</a>
+<!--<a href="#fhelp" data-toggle="modal" data-target="#findable_info">
+<span class="pull-right glyphicon glyphicon-info-sign"  aria-hidden="true">
+</span>
+</a>
+-->
+</h4>
+</div>
+<!--<div id="collapseOne" class="panel-collapse collapse in"> -->
+<div id="collapseOne" class="panel-collapse collapse">
+<div class="panel-body">
+<form>
+
+<!-- QUESTION Findable 1 -->
+<div class="form-group row">
+<label for="q1" class="col-sm-6 col-form-label">
+<a href="#" data-toggle="modal" data-target="#info_q1">
+
+<!--Does the dataset have any identifiers assigned?
+Do you have a unique identifier for your datasets? [C51]
+-->
+</a>
+
+`r toString(findable_q1_title)`
+
+</label>
+
+<div class="col-sm-6">
+<select class="form-control" id="q1" name="q1">
+
+<!--
+<option value="8">Globally Unique, citable and persistent (e.g. DOI, PURL, ARK
+or Handle)
+</option>
+<option value="3">Web address (URL)</option>
+<option value="1">Local identifier</option>
+<option value="0" selected="selected">No identifier</option>
+-->
+<option id="q1-0" value="0" `r toString(q1_0)`>Do you have a unique identifier for your datasets?</option>
+<option id="q1a" value="5" `r toString(q1_a)`>Yes (5)</option>
+<option id="q1b" value="0" `r toString(q1_b)`>No (0)</option>
+<option id="q1c" value="0" `r toString(q1_c)`>I don't know (0)</option>
+<option id="q1d" value="0" `r toString(q1_d)`>This question doesn't apply to this data infrastructure (0)</option>
+
+</select>
+</div>
+</div>
+
+<!-- QUESTION Findable 2 -->
+<div class="form-group row">
+<label for="q2" class="col-sm-6 col-form-label">
+<a href="#" data-toggle="modal" data-target="#info_q2">
+
+<!--Is the dataset identifier included in all metadata records/files describing the data?
+Do you have a unique identifier for the metadata? [C53]-->
+
+</a>
+
+`r toString(findable_q2_title)`
+
+</label>
+
+<div class="col-sm-6">
+
+<!--<select class="form-control" id="q2">
+<option value="1">Yes</option>
+<option value="0" selected="selected">No</option>
+</select>-->
+<select class="form-control" id="q2" name="q2">
+<option id="q2-0" value="0" `r toString(q2_0)`>Do you have a unique identifier for the metadata?</option>
+<option id="q2a" value="4" `r toString(q2_a)`>Yes (4)</option>
+<option id="q2b" value="0" `r toString(q2_b)`>No (0)</option>
+</select>
+
+
+</div>
+</div>
+
+<!-- QUESTION Findable 3 -->
+<div class="form-group row">
+<label for="q3" class="col-sm-6 col-form-label">
+<a href="#" data-toggle="modal" data-target="#info_q3">
+
+<!--How is the data described with metadata?
+Do you produce or collect metadata for all your data (e.g. handbook, guide for users, description, keywords, timestamp, spatial coverage etc.)? Please specify. [C48]-->
+
+</a>
+
+`r toString(findable_q3_title)`
+
+</label>
+
+<div class="col-sm-6">
+<!--<textarea>
+<option value="4">Comprehensively (see suggestion) using a recognised formal machine-readable metadata schema.</option>
+<option value="3">Comprehensively, but in a text-based, non-standard format.</option>
+<option value="2">Brief title and description</option>
+<option value="0" selected="selected">The data is not described</option>
+</textarea>-->
+
+<select class="form-control" id="q3" name="q3">
+<option id="q3-0" value="0" `r toString(q3_0)`>Do you produce or collect metadata for all your data (e.g. handbook, guide for users, description, keywords, timestamp, spatial coverage etc.)?</option>
+<option id="q3a" value="4" `r toString(q3_a)`>Comprehensively (see suggestion) using a recognised formal machine-readable metadata schema. (4)</option>
+<option id="q3b" value="3" `r toString(q3_b)`>Comprehensively, but in a text-based, non-standard format. (3)</option>
+<option id="q3c" value="2" `r toString(q3_c)`>Brief title and description (2)</option>
+<option id="q3d" value="0" `r toString(q3_d)`>The data is not described (0)</option>
+
+</select>
+</div>
+</div>
+
+
+<!-- QUESTION Findable 4 -->
+<div class="form-group row">
+<label for="q4" class="col-sm-6 col-form-label">
+<a href="#" data-toggle="modal" data-target="#info_q4">
+
+<!--What type of repository or registry is the metadata record in?
+Do you have a public metadata catalogue service? [C50]-->
+
+</a>
+
+`r toString(findable_q4_title)`
+
+</label>
+
+<div class="col-sm-6">
+<select class="form-control" id="q4" name="q4">
+
+<!--<option value="4">Data is in one place but discoverable through several registries</option>
+<option value="2">Generalist public repository</option>
+<option value="2">Domain-specific repository</option>
+<option value="2">Local institutional repository</option>
+<option value="0" selected="selected">
+The data is not described in any repository
+</option>-->
+<option id="q4-0" value="0" `r toString(q4_0)`>Do you have a public metadata catalogue service?</option>
+<option id="q4a" value="4" `r toString(q4_a)`>Yes (4)</option>
+<option id="q4b" value="0" `r toString(q4_b)`>No (0)</option>
+<option id="q4c" value="0" `r toString(q4_c)`>I don't know (0)</option>
+<option id="q4d" value="0" `r toString(q4_d)`>This question doesn't apply to this data infrastructure (0)</option>
+
+
+</select>
+</div>
+</div>
+</form>
+<div class="w3-border">
+<div id="fbar" class="w3-container w3-padding w3-green" style="width:0;">
+<div class="w3-center" id="demo"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+<!-- Accessible -->
+<div class="panel panel-default">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a data-toggle="collapse" href="#collapseTwo">Accessible</a>
+<a href="#" data-toggle="modal" data-target="#accessible_info">
+<span class="pull-right glyphicon glyphicon-info-sign" aria-hidden="true">
+</span>
+</a>
+</h4>
+</div>
+<div id="collapseTwo" class="panel-collapse collapse">
+<div class="panel-body">
+<form>
+
+<!-- QUESTION Accessible 1 -->
+<div class="form-group row">
+<label for="q5" class="col-sm-6 col-form-label">
+<a href="#" data-toggle="modal" data-target="#info_q5">
+
+<!--How accessible is the data?-->
+Do you provide access to individual and/or aggregated data (for third party users)? [C58]
+
+</a>
+</label>
+
+<div class="col-sm-6">
+<select class="form-control" id="q5" name="q5">
+
+<!--<option value="5">Publicly accessible</option>
+<option value="5">Fully accessible to persons who meet explicitly stated conditions,e.g. ethics approval for sensitive data</option>
+<option value="4">A de-identified / modified subset of the data is publicly accessible</option>
+<option value="3">Embargoed access after a specified date</option>
+<option value="2">Unspecified conditional access e.g. contact the data custodian for access</option>
+<option value="1">Access to metadata only</option>
+<option value="0" selected="selected">No access to data or metadata</option>-->
+
+<option value="4">Publicly accessible individual and aggregated (4)</option>
+<option value="3">Publicly accessible aggregated (3)</option>
+<option value="0" selected="selected">I don't know (0)</option>
+<option value="0" selected="selected">This doesn't apply to this data infrastructure (0)</option>
+
+
+
+</select>
+</div>
+</div>
+
+<!-- QUESTION Accessible 2 -->
+<div class="form-group row">
+<label for="q6" class="col-sm-6 col-form-label">
+<a href="#" data-toggle="modal" data-target="#info_q6">
+
+<!--Is the data available online without requiring specialised protocols or tools once access has been approved?-->
+Is it possible to extract the data from the data infrastructure (e.g. download) or do they have to stay in the data infrastructure? [C62]
+
+</a>
+</label>
+
+<div class="col-sm-6">
+<select class="form-control" id="q6" name="q6">
+
+
+<!--<option value="4">Standard web service API (e.g. OGC)</option>
+<option value="3">Non-standard web service (e.g. OpenAPI/Swagger/informal API)</option>
+<option value="2">File download from online location</option>
+<option value="1">By individual arrangement</option>
+<option value="0" selected="selected">No access to data</option>-->
+
+<option value="4">Standard web service API (e.g. OGC) (4)</option>
+<option value="3">Non-standard web service (e.g. OpenAPI/Swagger/informal API) (3)</option>
+<option value="2">File download from online location (2)</option>
+<option value="1">By individual arrangement (1)</option>
+<option value="0" selected="selected">No access to data (0)</option>
+
+</select>
+</div>
+</div>
+
+<!-- QUESTION Accessible 3 -->
+<div class="form-group row">
+<label for="q7" class="col-sm-6 col-form-label">
+<a href="#" data-toggle="modal" data-target="#info_q7">
+
+<!--Will the metadata record be available even if the data is no longer available?-->
+Do third party users have to register to the data infrastructure and have an account in order to access the data? [C65]
+
+</a>
+</label>
+
+<div class="col-sm-6">
+<select class="form-control" id="q7" name="q7">
+
+<!--<option value="1">Yes</option>
+<option value="0">No</option>
+<option value="0" selected="selected">Unsure</option>-->
+
+<option value="1">Yes (1)</option>
+<option value="0">No (0)</option>
+<option value="0" selected="selected">Unsure (0)</option>
+
+</select>
+</div>
+</div>
+
+
+
+<!-- QUESTION Accessible 4 -->
+<div class="form-group row">
+<label for="q14" class="col-sm-6 col-form-label">
+<a href="#" data-toggle="modal" data-target="#info_q14">
+
+<!--Will the metadata record be available even if the data is no longer available?-->
+Are the conditions of access published? [C60]
+
+</a>
+</label>
+
+<div class="col-sm-6">
+<select class="form-control" id="q14" name="q14">
+
+<option value="1">Yes (1)</option>
+<option value="0">No (0)</option>
+<option value="0" selected="selected">Unsure (0)</option>
+
+</select>
+</div>
+</div>
+
+
+
+</form>
+<div class="w3-border">
+<div id="abar" class="w3-container w3-padding w3-green" style="width:1%">
+<div class="w3-center" id="idemo"></div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+<!-- Interoperable -->
+<div class="panel panel-default">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a data-toggle="collapse" href="#collapseThree">Interoperable</a>
+<a href="#" data-toggle="modal" data-target="#interoperable_info">
+<span class="pull-right glyphicon glyphicon-info-sign"  aria-hidden="true">
+</span>
+</a>
+</h4>
+</div>
+<div id="collapseThree" class="panel-collapse collapse">
+<div class="panel-body">
+<form>
+
+<!-- QUESTION Interoperable 1 -->
+<div class="form-group row">
+
+<label for="q8" class="col-sm-6 col-form-label">
+<a href="#reusable_info" data-toggle="modal" data-target="#info_q8">
+
+<!--What (file) format(s) is the data available in?-->
+What is the format(s) for distributing data? [C73] or [C25]
+
+</a>
+</label>
+
+<div class="col-sm-6">
+<select class="form-control" id="q8" name="q8">
+
+
+<!--<option value="2">In a structured, open standard, machine-readable format</option>
+<option value="1">In a structured, open standard, non-machine-readable format</option>
+<option value="0" selected="selected">Mostly in a proprietary format</option>-->
+
+<option value="4">In a structured, open standard, machine-readable format (csv, xml, json, R, ...)(4) </option>
+<option value="2">In a structured, open standard, non-machine-readable format (2) (pdf)</option>
+<option value="0" selected="selected">Mostly in a proprietary format (SAS) (0)</option>
+<option value="0" selected="selected">Other (0)</option>
+<option value="0" selected="selected">I don't know (0)</option>
+<option value="0" selected="selected">This doesn't apply to this data infrastructure</option>
+
+
+</select>
+</div>
+</div>
+
+<!-- QUESTION Interoperable 2 -->
+<div class="form-group row">
+<label for="q9" class="col-sm-6 col-form-label">
+<a href="#" data-toggle="modal" data-target="#info_q9">
+
+<!--What best describes the types of vocabularies/ontologies/tagging schemas used to define the data elements?-->
+Which community-recognised vocabularies, standards or methodologies are used for metadata and data to facilitate interoperability? [C71]
+
+</a>
+</label>
+
+<div class="col-sm-6">
+<select class="form-control" id="q9" name="q9">
+
+
+<!--<option value="3">Standardised open and universal using resolvable global identifiers linking to explanations</option>
+<option value="2">Standardised vocabularies/ontologies/schema without global identifiers</option>
+<option value="1">No standards have been applied in the description of data elements</option>
+<option value="0" selected="selected">Data elements not described</option>-->
+
+<option value="2">Standardised open and universal using resolvable global identifiers linking to explanations  (OPen ex: ...) (2)</option>
+<option value="1">Standardised vocabularies/ontologies/schema without global identifiers (HL7, FHIR, SNOMED CT, LOINC, ICD-10,...) (1)</option>
+<option value="1">Other (1)</option>
+<option value="0" selected="selected">Data elements not described (0)</option>
+<option value="0" selected="selected">I don't know (0)</option>
+<option value="0" selected="selected">This doesn't apply to this data infrastructure (0)</option>
+
+</select>
+</div>
+</div>
+
+<!-- QUESTION Interoperable 3 -->
+<div class="form-group row">
+<label for="q10" class="col-sm-6 col-form-label">
+<a href="#" data-toggle="modal" data-target="#info_q10">
+
+<!--How is the metadata linked to other data and metadata (to enhance context and clearly indicate relationships)?-->
+Do you have a metadata record API endpoint (m2m) in place? [C75]
+
+</a>
+</label>
+
+<div class="col-sm-6">
+<select class="form-control" id="q10" name="q10">
+
+<!--<option value="3">Metadata is represented in a machine readable format, e.g. in a linked data format such as Resource Description Framework (RDF).</option>
+<option value="2">The metadata record includes URI links to related metadata, data and definitions</option>
+<option value="0" selected="selected">There are no links to other metadata</option>-->
+
+<option value="2">Yes (2)</option>
+<option value="0" selected="selected">No (0)</option>
+<option value="0" selected="selected">I don't know</option>
+<option value="0" selected="selected">This question doesn't apply to this data infrastructure (0)</option>
+
+</select>
+</div>
+</div>
+
+<!-- Question removed...
+<div class="form-group row">
+<label for="q11" class="col-sm-6 col-form-label">
+Does the metadata state how you wish your data to be cited?
+</label>
+<div class="col-sm-6">
+<select class="form-control" id="q11">
+<option value="1">Yes</option>
+<option value="0" selected="selected">No</option>
+</select>
+</div>
+</div>
+-->
+
+</form>
+<div class="w3-border">
+<div id="ibar" class="w3-container w3-padding w3-green" style="width:1%">
+<div class="w3-center" id="iidemo"></div>
+</div>
+</div>
+
+
+</div>
+</div>
+</div>
+
+<!-- Reusable -->
+<div class="panel panel-default">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a data-toggle="collapse" href="#collapseFour">Reusable</a>
+<a href="#fhelp" data-toggle="modal" data-target="#reusable_info">
+<span class="pull-right glyphicon glyphicon-info-sign"  aria-hidden="true">
+</span>
+</a>
+</h4>
+</div>
+<div id="collapseFour" class="panel-collapse collapse">
+<div class="panel-body">
+<form>
+
+<!-- QUESTION Reusable 1 -->
+<div class="form-group row">
+<label for="q11" class="col-sm-6 col-form-label">
+<a href="#" data-toggle="modal" data-target="#info_q11">
+
+<!--Which of the following best describes the license/usage rights attached to the data?-->
+Is there a clear procedure for third party users to request (the license) for data re-use? [C77]
+
+</a>
+</label>
+
+<div class="col-sm-6">
+<select class="form-control" id="q11" name="q11">
+
+<!--<option value="4">Standard machine-readable license (e.g. Creative Commons)</option>
+<option value="3">Standard text based license</option>
+<option value="3">Non-standard machine-readable license(clearly indicating under what conditions the data may be reused)</option>
+<option value="2">Non-standard text-based license</option>
+<option value="0" selected="selected">No license</option>-->
+
+<option value="3">Yes (3)</option>
+<option value="0">No(0)</option>
+<option value="0">I don't know (0)</option>
+<option value="0" selected="selected">This question doesn't apply to this data infrastructure (0)</option>
+
+
+</select>
+</div>
+</div>
+
+<!-- QUESTION Reusable 2 -->
+<div class="form-group row">
+<label for="q12" class="col-sm-6 col-form-label">
+<a href="#" data-toggle="modal" data-target="#info_q12">
+
+<!--How much provenance information has been captured to facilitate data reuse?-->
+Have you placed the metadata related to your data infrastructure (that is, the above information provided in this survey) in another available source already? [C46]
+
+</a>
+</label>
+
+<div class="col-sm-6">
+<select class="form-control" id="q12" name="q12">
+
+<!--<option value="3">Fully recorded in a machine readable format</option>
+<option value="2">Fully recorded in a text format</option>
+<option value="1">Partially recorded</option>
+<option value="0" selected="selected">No provenance information is recorded</option>-->
+
+<option value="2">Yes (2)</option>
+<option value="0">No (0)</option>
+<option value="1">I don't know (0)</option>
+<option value="0" selected="selected">This question doesn't apply to this data infrastructure (0)</option>
+
+
+</select>
+</div>
+</div>
+
+
+<!-- QUESTION Reusable 3 -->
+<div class="form-group row">
+<label for="q13" class="col-sm-6 col-form-label">
+<a href="#" data-toggle="modal" data-target="#info_q13">
+
+<!--How much provenance information has been captured to facilitate data reuse?-->
+Is it possible for third party users to access the data and re-use it for more than one purpose/project? [C76]
+
+</a>
+</label>
+
+<div class="col-sm-6">
+<select class="form-control" id="q13" name="q13">
+
+<!--<option value="3">Fully recorded in a machine readable format</option>
+<option value="2">Fully recorded in a text format</option>
+<option value="1">Partially recorded</option>
+<option value="0" selected="selected">No provenance information is recorded</option>-->
+
+<option value="2">Yes (2)</option>
+<option value="0">No (0)</option>
+<option value="1">I don't know (0)</option>
+<option value="0" selected="selected">This question doesn't apply to this data infrastructure (0)</option>
+
+
+</select>
+</div>
+</div>
+
+
+
+</form>
+<div class="w3-border">
+<div id="rbar" class="w3-container w3-padding w3-green" style="width:1%">
+<div class="w3-center" id="rdemo"></div>
+</div>
+</div>
+
+
+</div>
+</div>
+</div>
+</div>
+
+<h4>Total across F.A.I.R</h4>
+
+<div class="w3-border">
+<div id="tbar" class="w3-container w3-padding w3-green" style="width:0%">
+<div class="w3-center" id="tdemo"></div>
+</div>
+</div>
+<br>
+<p>
+
+  <form id="form">
+
+<p> Stars <span id="tstars"></span></p>
+<p> FINDABLE score <span id="fscore"></span></p>
+<p> ACCESSIBLE score <span id="ascore"></span></p>
+<p> INTEROPERABLE score <span id="iscore"></span></p>
+<p> REUSABLE score <span id="rscore"></span></p>
+<!--<p> FAIRNESS total score <span id="tscore"></span></p>-->
+<p> FAIRNESS score <span id="tpercentage"></span></p>
+
+
+
+<input class="form-control" type="hidden" id="findablescore" name="findablescore" value="" />
+<input class="form-control" type="hidden" id="accessiblescore" name="accessiblescore" value="" />
+<input class="form-control" type="hidden" id="interopscore" name="interopscore" value="" />
+<input class="form-control" type="hidden" id="reusescore" name="reusescore" value="" />
+<input class="form-control" type="hidden" id="totalscore" name="totalscore" value="" />
+
+<input class="form-control" type="hidden" id="findable1" name="findable1" value="" />
+<input class="form-control" type="hidden" id="findable2" name="findable2" value="" />
+<input class="form-control" type="hidden" id="findable3" name="findable3" value="" />
+<input class="form-control" type="hidden" id="findable4" name="findable4" value="" />
+
+
+
+<input type="button" value="Download csv" id="dl" onclick="submitForm();">
+</form>
+
+
+
+
+```{r, echo=FALSE}
+
+
+if (file.exists("./FAIRevaluation.csv")) {
+
+library(dplyr)
+library(ggplot2)
+
+
+findable=c(as.integer(my_csv2[2])/17*100+ as.integer(my_csv2[3])/17*100+as.integer(my_csv2[4])/17*100+as.integer(my_csv2[5])/17*100,(17-as.integer(my_csv2[2])-as.integer(my_csv2[3])-as.integer(my_csv2[4])-as.integer(my_csv2[5]))/17*100)
+
+
+df <- data.frame(
+Findable = c("Findable", "Not findable"), value = findable)
+
+
+bp<- ggplot(df, aes(x="", y=value, fill=Findable))+
+geom_bar(width = 1, stat = "identity")+
+  coord_fixed() +
+xlab("") + 
+ylab("")
+
+pie <- bp + coord_polar("y", start=0,direction=-1) + ggtitle("Findable") + scale_fill_manual(values = c('blue','gray'))
+plot(pie)
+
+head(df)
+
+}
+
+```
+
+
+
+
+
+
+
+
+
+```{r, echo=FALSE}
+
+
+if (file.exists("./FAIRevaluation.csv")) {
+  
+findable=c(as.integer(my_csv2[2])/17*100, as.integer(my_csv2[3])/17*100,as.integer(my_csv2[4])/17*100,as.integer(my_csv2[5])/17*100,(17-as.integer(my_csv2[2])-as.integer(my_csv2[3])-as.integer(my_csv2[4])-as.integer(my_csv2[5]))/17*100)
+
+
+df <- data.frame(
+Findable = c("Do you have a unique identifier for your datasets?", "Do you have a unique identifier for the metadata?", "Do you produce or collect metadata for all your data?", "Do you have a public metadata catalogue service?",""), value = findable)
+
+
+bp<- ggplot(df, aes(x="", y=value, fill=Findable))+
+geom_bar(width = 1, stat = "identity")+
+xlab("") + 
+ylab("")
+
+pie <- bp + coord_polar("y", start=0) + ggtitle("Findable")
+plot(pie)
+
+head(df)
+
+}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+
+
+
+//Clear form once submitted
+function clearForm(){
+document.getElementById("form").reset();
+}
+
+
+
+function submitForm() {
+
+document.getElementById('findablescore').value= document.getElementById("fscore").textContent;
+document.getElementById('accessiblescore').value= document.getElementById("ascore").textContent;
+document.getElementById('interopscore').value= document.getElementById("iscore").textContent;
+document.getElementById('reusescore').value= document.getElementById("rscore").textContent;
+document.getElementById('totalscore').value= document.getElementById("tpercentage").textContent;
+
+document.getElementById('findable1').value= q1[q1.selectedIndex].id;
+document.getElementById('findable2').value= q2[q2.selectedIndex].id;
+document.getElementById('findable3').value= q3[q3.selectedIndex].id;
+document.getElementById('findable4').value= q4[q4.selectedIndex].id;
+
+
+
+var formData = $("form").serializeArray();
+let csv = "data:text/csv;charset=utf-8,"; // accept data as CSV
+
+formData.forEach(function(item) {
+csv += item.value + ";"; // concat form value on csv var and add ; to create columns (you can change to , if want)
+});
+
+var encodedUri = encodeURI(csv);
+
+// if you want to download
+var downloadLink = document.createElement("a");
+downloadLink.setAttribute("download", "FAIRevaluation.csv");
+downloadLink.setAttribute("href", encodedUri);
+document.body.appendChild(downloadLink); // Required for FF
+downloadLink.click();
+downloadLink.remove();
+
+clearForm();
+}
+</script>
+
+
+
+
+ 
+</p>
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Trigger the modal with a button
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+-->
+
+<!-- Modal -->
+<div id="findable_info" class="modal fade" role="dialog">
+<div class="modal-dialog">
+
+<!-- Modal content-->
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+<h4 class="modal-title">About Findable</h4>
+</div>
+<div class="modal-body">
+<p>.
+</p>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+</div>
+
+</div>
+</div>
+
+<div id="accessible_info" class="modal fade" role="dialog">
+<div class="modal-dialog">
+
+<!-- Modal content-->
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+<h4 class="modal-title">About Accessible</h4>
+</div>
+<div class="modal-body">
+<p>.
+</p>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+</div>
+
+</div>
+</div>
+
+<div id="interoperable_info" class="modal fade" role="dialog">
+<div class="modal-dialog">
+
+<!-- Modal content-->
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+<h4 class="modal-title">About Interoperability</h4>
+</div>
+<div class="modal-body">
+<p>.
+</p>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+</div>
+
+</div>
+</div>
+
+<div id="reusable_info" class="modal fade" role="dialog">
+<div class="modal-dialog">
+
+<!-- Modal content-->
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+<h4 class="modal-title">About Reusable</h4>
+</div>
+<div class="modal-body">
+<p>.
+</p>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+</div>
+
+</div>
+</div>
+
+
+<div id="info_q1" class="modal fade" role="dialog">
+<div class="modal-dialog">
+
+<!-- Modal content-->
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+<h4 class="modal-title">About identifiers</h4>
+</div>
+<div class="modal-body">
+<p>.
+</p>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+</div>
+
+</div>
+</div>
+
+<div id="info_q2" class="modal fade" role="dialog">
+<div class="modal-dialog">
+
+<!-- Modal content-->
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+<h4 class="modal-title">About identifiers</h4>
+</div>
+<div class="modal-body">
+<p>.
+</p>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+</div>
+
+</div>
+</div>
+
+
+<div id="info_q3" class="modal fade" role="dialog">
+<div class="modal-dialog">
+
+<!-- Modal content-->
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+<h4 class="modal-title">About metadata descriptions</h4>
+</div>
+<div class="modal-body">
+<p>.
+</p>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+</div>
+
+</div>
+</div>
+
+<div id="info_q4" class="modal fade" role="dialog">
+<div class="modal-dialog">
+
+<!-- Modal content-->
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+<h4 class="modal-title">About metadata repositories</h4>
+</div>
+<div class="modal-body">
+<p>.
+</p>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+</div>
+
+</div>
+</div>
+
+
+
+<div id="info_q5" class="modal fade" role="dialog">
+<div class="modal-dialog">
+
+<!-- Modal content-->
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+<h4 class="modal-title">About data accessibility</h4>
+</div>
+<div class="modal-body">
+<p>.
+</p>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+</div>
+
+</div>
+</div>
+
+
+<div id="info_q6" class="modal fade" role="dialog">
+<div class="modal-dialog">
+
+<!-- Modal content-->
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+<h4 class="modal-title">About protocols</h4>
+</div>
+<div class="modal-body">
+<p>.
+</p>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+</div>
+
+</div>
+</div>
+
+
+<div id="info_q7" class="modal fade" role="dialog">
+<div class="modal-dialog">
+
+<!-- Modal content-->
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+<h4 class="modal-title">About metadata availability</h4>
+</div>
+<div class="modal-body">
+<p>.
+</p>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+</div>
+
+</div>
+</div>
+
+
+
+
+
+<div id="info_q8" class="modal fade" role="dialog">
+<div class="modal-dialog">
+
+<!-- Modal content-->
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+<h4 class="modal-title">About file formats</h4>
+</div>
+<div class="modal-body">
+ <p>.
+</p>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+</div>
+
+</div>
+</div>
+
+<div id="info_q9" class="modal fade" role="dialog">
+<div class="modal-dialog">
+
+<!-- Modal content-->
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+<h4 class="modal-title">About schema standards</h4>
+</div>
+<div class="modal-body">
+ <p>.
+</p>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+</div>
+
+</div>
+</div>
+
+
+<div id="info_q10" class="modal fade" role="dialog">
+<div class="modal-dialog">
+
+<!-- Modal content-->
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+<h4 class="modal-title">About metadata links</h4>
+</div>
+<div class="modal-body">
+ <p>.
+</p>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+</div>
+
+</div>
+</div>
+
+
+<div id="info_q11" class="modal fade" role="dialog">
+<div class="modal-dialog">
+
+<!-- Modal content-->
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+<h4 class="modal-title">About licenses</h4>
+</div>
+<div class="modal-body">
+ <p>.
+</p>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+</div>
+
+</div>
+</div>
+
+<div id="info_q12" class="modal fade" role="dialog">
+<div class="modal-dialog">
+
+<!-- Modal content-->
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+<h4 class="modal-title">About provenance</h4>
+</div>
+<div class="modal-body">
+<p>.
+</p>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+</div>
+
+</div>
+</div>
+
+
+<div id="info_q13" class="modal fade" role="dialog">
+<div class="modal-dialog">
+
+<!-- Modal content-->
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+<h4 class="modal-title">C76</h4>
+</div>
+<div class="modal-body">
+<p>.
+</p>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+</div>
+
+</div>
+</div>
+
+
+<div id="info_fscore" class="modal fade" role="dialog">
+<div class="modal-dialog">
+
+<!-- Modal content-->
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+<h4 class="modal-title">About Findable Score</h4>
+</div>
+<div class="modal-body">
+<p>.
+</p>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+</div>
+
+</div>
+</div>
+
+<div id="info_ascore" class="modal fade" role="dialog">
+<div class="modal-dialog">
+
+<!-- Modal content-->
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+<h4 class="modal-title">About Accessible Score</h4>
+</div>
+<div class="modal-body">
+<p>.</p>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+</div>
+
+</div>
+</div>
+
+
+<div id="info_iscore" class="modal fade" role="dialog">
+<div class="modal-dialog">
+
+<!-- Modßal content-->
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+<h4 class="modal-title">About Interoperable Score</h4>
+</div>
+<div class="modal-body">
+<p>.
+</p>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+</div>
+
+</div>
+</div>
+
+<div id="info_rscore" class="modal fade" role="dialog">
+<div class="modal-dialog">
+
+<!-- Modal content-->
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+<h4 class="modal-title">About Reusable Score</h4>
+</div>
+<div class="modal-body">
+ <p>.</p>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+</div>
+
+</div>
+</div>
+
+
+
+# Open-notebook
+Access <A HREF=https://mybinder.org/v2/gh/Marine-Analyst/Jupyter/main?urlpath=rstudio TARGET=_blank>MyBinder.org/Marine-Analyst</A> virtual environment.<br>
+More info at <A HREF=http://marine-analyst.eu/dev.py?N=50&O=487 TARGET=_blank>Marine-Analyst.eu</A><br>
+<p xmlns:cc="http://creativecommons.org/ns#" >This document produced by <span property="cc:attributionName">Marine-analyst.eu</span> is licensed under <a href="http://creativecommons.org/licenses/by-nc/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1"></a></p>
+
+```{r, include=FALSE, results='hide'}
+rm(list=ls())
+gc()
+```
+
